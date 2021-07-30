@@ -1,0 +1,2 @@
+enable_plugin neutron https://opendev.org/openstack/neutron
+enable_service neutron-qos

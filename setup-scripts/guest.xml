@@ -1,0 +1,40 @@
+<domain type='bhyve'>
+    <name>freebsd</name>
+    <uuid>df3be7e7-a104-11e3-aeb0-50e5492bd3dc</uuid>
+    <memory unit='GiB'>2</memory>
+    <currentMemory unit='GiB'>2</currentMemory>
+    <vcpu>1</vcpu>
+    <os>
+       <type>hvm</type>
+       <loader readonly="yes" type="pflash">/usr/local/share/uefi-firmware/BHYVE_UEFI.fd</loader>
+    </os>
+    <features>
+        <apic/>
+        <acpi/>
+    </features>
+    <clock offset='utc'/>
+    <on_poweroff>destroy</on_poweroff>
+    <on_reboot>restart</on_reboot>
+    <on_crash>destroy</on_crash>
+    <devices>
+        <disk type='file' device='cdrom'>
+            <driver name='file' type='raw'/>
+	    <source file='/root/images/FreeBSD-12.1-RELEASE-amd64-bootonly.iso'/>
+            <target dev='hdc' bus='sata'/>
+            <readonly/>
+        </disk>
+        <disk type='file'>
+            <driver name='file' type='raw'/>
+            <source file='/root/images/freebsd.img'/>
+            <target dev='hda' bus='sata'/>
+      	</disk>
+        <interface type='bridge'>
+            <model type='virtio'/>
+            <source bridge="bridge0"/>
+        </interface>
+        <serial type="nmdm">
+            <source master="/dev/nmdm0A" slave="/dev/nmdm0B"/>
+        </serial>
+    </devices>
+</domain>
+
